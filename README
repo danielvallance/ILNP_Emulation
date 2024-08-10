@@ -1,0 +1,84 @@
+This repository comprises an emulation of ILNP enabled IoT devices, with a management plane implementation and an API which can be used to build applications over the emulation.
+It also contains some example scenario applications, and a dataset.
+
+
+Licensing:
+    The file get_yaml_dict.py makes use of the pyYAML library, and so it uses the MIT license that the pyYAML library uses. This license can be found at the top of get_yaml_dict.py, in the pyYAML_LICENSE.txt file, and at the pyYAML repository at https://github.com/yaml/pyyaml/
+
+    The file resource_getters.py makes use of the psutil library, and so it uses the 3-Clause BSD license that the psutil library uses. This license can be found at the top of resource_getters.py, in the psutil_LICENSE.txt file, and at the psutil repository at https://github.com/giampaolo/psutil/
+
+    The rest of the files submitted as part of this project were written by me and so are licensed under the 3-Clause BSD license in the "3Clause_BSD_License.txt" file with accreditation to Daniel Vallance
+    As a reminder it is put at the top of all source files (apart from the 2 files mentioned above), however it also applies to the data files and the .png files which it could not be placed at the top of
+
+
+Library links:
+    psutil: https://github.com/giampaolo/psutil/
+    pyYAML: https://github.com/yaml/pyyaml/
+
+
+Code Manifest:
+    In root project folder:
+        requirements.txt:           Contains Python dependencies required to run emulation management server and API
+        run_tmux_server.sh:         Ensures the emulation management server is running on a tmux session on the localhost
+        refresh_tmux_servers.sh:    SSHs into the specified machines and runs run_tmux_server.sh
+        pyYAML_LICENSE.txt:         License for pyYAML library
+        psutil_LICENSE.txt:         License for psutil library
+        hostnames:                  List of hosts which could be passed to refresh_tmux_servers.sh
+        3Clause_BSD_License.txt     3-Clause BSD license for the code Daniel Vallance wrote
+        UserManual.pdf:             Installation and running instructions
+
+    In src/ folder:
+        utilities.py:               Utility methods
+        UnackedLU.py:               Object representing locator update awaiting acknowledgement
+        resource_getters.py:        Methods which use the psutil library to get resource usage
+        RemoteLocEntry.py:          Object used to represent locator data in remote I-LV
+        regular_coroutines:         Coroutines the emulated IoT regularly performs
+        ReceivedAppData:            Object that wraps received application data with source metadata
+        OwnLocEntry.py:             Object used to represent locator data of emulated IoT's own locator
+        mgmt_utilities.py:          Methods to handle API calls
+        main.py:                    Main file containing emulated IoT's logic
+        ipv4_control_utilities.py:  Utility methods relevant to the API control plane
+        ILNPReceiverProtocol:       Protocol which define callbacks for DatagramEndpoint events
+        get_yaml_dict.py:           Contains method which uses pyYAML library to return dictionary storing YAML file's parameters
+        ForwardingEntry.py:         Object representing an entry in the forwarding table of an emulated IoT
+        EmulationSever.py:          Object representing the emulation management server
+        emulation_api.py:           Contains the API for creating applications over the emulation
+        emulated_iot.service:       Unit file which can be used to run the emulation management server as a systemd service
+        constants.py:               Constants
+        config.yml:                 Configuration file
+        AvailableRouterEntry.py:    Object which represents a router which the emulated IoT has recently received an advertisement from
+
+    In src/experiments folder:
+        BaseIoT.py:                 Object representing an emulated IoT containing some methods which are common across the experiments
+
+    In src/experiments/tsn folder:
+        config.yml:                 Application configuration file
+        topology.yml:               Initial topology file
+        tsn_constants.py:           Application constants
+        tsn_utilities.py:           Application utilities
+        run_experiment.py:          Runs the temperature sensor network and writes data to files
+        Gradient.py:                Object representing a sink's interest in a temperature range
+        Sensor.py:                  Object representing IoT temperature sensor
+        Sink.py:                    Object representing IoT temperature sensor network sink
+
+    In src/experiments/emergency_comms:
+        config.yml:                     Application configuration file
+        topology.yml:                   Initial topology file
+        emergency_comms_constants.py:   Application constants
+        emergency_comms_utilities.py:   Application utilities
+        run_experiment.py:              Runs the emergency communication network and writes data to files
+        Mobile.py:                      Represents mobile in emergency communication network
+
+    In src/experiments/animal_tracker:
+        config.yml:                     Application configuration file
+        topology.yml:                   Initial topology file
+        animal_tracker_constants.py:    Application constants
+        animal_tracker_utilities.py:    Application utilities
+        run_experiment.py:              Runs the animal tracker network and writes data to files
+        Router.py                       Represents the routers in the animal tracker network
+        Animal.py                       Represents the animal IoT in the animal tracker network
+        Sink.py:                        Represents the sink in the animal tracker network
+
+    The data/ directory has a folder for each experimental scenario application. Each of these folders has a folder containing raw data (data/), graphs (graphs/) and gnuplot scripts (gnuplot/)
+
+The file UserManual.pdf contains installation and running instructions.

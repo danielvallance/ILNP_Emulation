@@ -1,0 +1,40 @@
+# Copyright 2023 Daniel Vallance
+#
+# Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+#
+# 1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+#
+# 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+#
+# 3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+
+set term png 12
+set output "../graphs/nodecentric_tsn_packetoverhead_several_runs.png"
+
+set title "Packet Overhead in Nodecentric TSN Using ILNP and\nIPv6 Emulations Over 15 60s runs (Whiskers at 1.5*IQR)"
+set xlabel "Protocol"
+set ylabel "Networks Packets Generated\nper Application Packet Generated"
+
+set xrange [0:3]
+
+set style data boxplot
+set style fill solid 0.5 border -1
+
+
+set boxwidth 0.3
+
+
+
+array COLOURS[2] = [ 3,1 ]
+array LABELS[2] = [ "ILNP", "IPv6" ]
+array FILE[20] = [ "../data/ilnp_packetoverheads_several_runs", "../data/ipv6_packetoverheads_several_runs" ]
+
+array XCOORD[2] = [ 1, 2 ]
+
+set xtics ( "ILNP" 1, "IPv6" 2 )
+
+plot for [i=1:2] FILE[i] using (XCOORD[i]):1 lc COLOURS[i] pt 1 title LABELS[i]
